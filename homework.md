@@ -6,3 +6,20 @@
 -listen to port
 -write request handlers for- test, hello
 -install nodemon and update scripts inside package.json
+-what are dependencies
+-what is the use of "-g" while npm install
+-Difference between caret and tilde(^ vs ~)
+
+
+-intialize git repo
+-gitignore
+-create remote repo on github
+-push all code to remote origin
+-play with reoutes 
+
+-Install Postman App
+-Create workspace 
+-create collections
+-Test API calls
+
+-write logic to handle GET POST PATCH PUT DELETE and test them on Postman
