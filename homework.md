@@ -1,0 +1,8 @@
+-Create a repository
+-Initialize the repository
+-node_modules, package-lock.json,package.json
+-install express
+-create server
+-listen to port
+-write request handlers for- test, hello
+-install nodemon and update scripts inside package.json
