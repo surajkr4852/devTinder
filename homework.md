@@ -35,3 +35,4 @@
 - how express JS basically handles request behind the scene
 -write a dummy auth middle for admin
 -write a dummy auth middle for all user routes ,except user/login.
+- Error handling - try catch, wildcard error handling
