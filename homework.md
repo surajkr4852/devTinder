@@ -23,3 +23,15 @@
 -Test API calls
 
 -write logic to handle GET POST PATCH PUT DELETE and test them on Postman
+-explore routing , use of ? * () * in the routes
+-use of regex in routes /a/  /.*fly$/
+-reading query params in the routes
+-reading the dynamic routes
+
+
+-next()
+-next function and errors along with with res.send();
+- what is middleware, Why do we need it?
+- how express JS basically handles request behind the scene
+-write a dummy auth middle for admin
+-write a dummy auth middle for all user routes ,except user/login.

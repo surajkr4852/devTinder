@@ -3,7 +3,8 @@ const express=require("express");
 const app=express();
 
 //This will only handle HTTP GET api call to user
-app.get("/user",(req,res)=>{
+app.get("/user/:userId/:name",(req,res)=>{
+    console.log(req.params);
     res.send({firstName:"Suraj",lastName:"Kumar"});
 });
 
@@ -16,6 +17,7 @@ app.post("/user",(req,res)=>{
 app.delete("/user",(req,res)=>{
     res.send("User deleted");
 });
+
 // This will handle all API request to test
 app.use("/test",(req,res)=>{ // Req handler function
     res.send("Hello from the server!");
