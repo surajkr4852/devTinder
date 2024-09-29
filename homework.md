@@ -36,3 +36,13 @@
 -write a dummy auth middle for admin
 -write a dummy auth middle for all user routes ,except user/login.
 - Error handling - try catch, wildcard error handling
+
+
+-episode 6
+-install mongoose library- npm i mongoose.
+- connect your application to DB using mongoose. => <"connectoonstring/DataBase Name">
+- call the connectDB function and connect to database before starting application on 7777...
+
+-create a user schema & User model
+-create POST /signup api to add data into database.
+-push some documents using api call from postman
