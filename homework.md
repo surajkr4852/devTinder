@@ -71,3 +71,5 @@
 - Add timestamps to the user Schema
 - Add API level validation on patch request and signup post api.
 - Add API level validation for each field.
+- Install validator library
+- Explore validator library functions and use validator func for password, email,photoUrl.

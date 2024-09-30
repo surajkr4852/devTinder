@@ -59,7 +59,7 @@ app.patch("/user/:userId",async(req,res)=>{
     const data=req.body;
 
     try{
-        const ALLOWED_UPDATES=["about","gender","age","skills"];
+        const ALLOWED_UPDATES=["about","gender","age","skills","photoUrl"];
 
         const isUpdateAllowed=Object.keys(data).every((k)=>
             ALLOWED_UPDATES.includes(k)

@@ -1,6 +1,7 @@
 // over here i will define what a user inside the database is .
 
 const mongoose=require("mongoose");
+const validator = require('validator');
 
 const userSchema= mongoose.Schema({
     // pass all the the parameters that define a user
@@ -19,10 +20,20 @@ const userSchema= mongoose.Schema({
         unique:true,
         lowercase: true,
         trim:true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("Invalid Email address "+value);
+            }
+        }
     },
     password:{
         type:String,
         required:true,
+        validate(value){
+            if(!validator.isStrongPassword(value)){
+                throw new Error("Enter a strong password...!");
+            }
+        }
     },
     age:{
         type:Number,
@@ -39,7 +50,12 @@ const userSchema= mongoose.Schema({
     },
     photoUrl:{
         type:String,
-        default:"https://www.pngitem.com/pimgs/m/272-2720656_user-profile-dummy-hd-png-download.png"
+        default:"https://www.pngitem.com/pimgs/m/272-2720656_user-profile-dummy-hd-png-download.png",
+        validate(value){
+            if(!validator.isURL(value)){
+                throw new Error("Invalid photo URL "+value);
+            }
+        }
     },
     about:{
         type:String,
