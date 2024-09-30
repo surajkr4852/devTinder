@@ -12,7 +12,7 @@ app.post("/signup",async (req,res)=>{ // Saving data into database.
         await user.save()
         res.send("User data is saved successfully");
     }catch(err){
-        console.log("Error saving to database");
+        res.status(400).send("Error saving the User...!"+ err.message);
     }
 })
 
@@ -58,10 +58,10 @@ app.patch("/user",async(req,res)=>{
     const userId=req.body.userId;
     const data=req.body;
     try{
-        await User.findByIdAndUpdate({_id:userId},data);
+        await User.findByIdAndUpdate({_id:userId},data,{runValidators:true});
         res.send("User updated Successfully");
     }catch(err){
-        res.status(400).send("Something went wrong");
+        res.status(400).send("Update failed"+err.message);
     }
 })
 

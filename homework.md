@@ -61,3 +61,11 @@
 -Explore the mongoose documents for api Models.
 - what are options in model.findOneAndUpdate method, explore more about it.
 - API- Update the user with email Id;
+
+
+
+- explore schematype option from the documentation
+- add required,unique,lowercase,min,minlength,trim,default
+- create a custom validate function
+- improve the DB schema.- put all appropriate validation on each field in schema
+- Add timestamps to the user Schema
