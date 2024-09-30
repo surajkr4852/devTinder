@@ -73,3 +73,4 @@
 - Add API level validation for each field.
 - Install validator library
 - Explore validator library functions and use validator func for password, email,photoUrl.
+- Never Blindly trust res.body;
