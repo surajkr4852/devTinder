@@ -29,7 +29,6 @@ app.get("/user",async (req,res)=>{
     }catch(err){
         res.status(400).send("Something went wrong...!");
     }
-    
 });
 
 //Feed API(shows all users from database) -GET /feed 
@@ -42,12 +41,36 @@ app.get("/feed",async (req,res)=>{
     }
 })
 
+//Delete a user from database.
+app.delete("/user",async(req,res)=>{
+    const userId=req.body.userId;
+    try{
+        await User.findByIdAndDelete(userId);
+        res.send("User deleted Successfully");
+    }catch(err){
+        res.status(400).send("Something went wrong....!");
+    }
+})
+
+//Update data of a user.
+app.patch("/user",async(req,res)=>{
+    const userId=req.body.userId;
+    const data=req.body;
+    try{
+        await User.findByIdAndUpdate({_id:userId},data);
+        res.send("User updated Successfully");
+    }catch(err){
+        res.status(400).send("Something went wrong");
+    }
+})
+
 connectDB()
     .then(()=>{
-        console.log("DB connection successfull");
+        console.log("DB connection successfully");
         app.listen(7777,()=>{
             console.log("Server is listening at port number 7777...!");
         })
     }).catch((err)=>{
-        console.error("Cannot cannot be connected");
-    })
+        console.error("Cannot be connected");
+    }
+);
