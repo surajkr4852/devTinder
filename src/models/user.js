@@ -1,4 +1,4 @@
-// over here i will define what a user inside me database is .
+// over here i will define what a user inside the database is .
 
 const mongoose=require("mongoose");
 

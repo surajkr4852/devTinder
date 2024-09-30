@@ -13,8 +13,12 @@ app.post("/signup",async (req,res)=>{
         gender: "Male"}
     );// creating a new instance of User Model
 
-    await user.save();
-    res.send("User Added Successfully");
+    try{
+        await user.save();
+        res.send("User Added Successfully");
+    }catch(err){
+        res.status(400).send("Error saving the user:"+err.message);
+    }
 });
 
 app.get("/user",(req,res)=>{
