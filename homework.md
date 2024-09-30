@@ -69,3 +69,5 @@
 - create a custom validate function
 - improve the DB schema.- put all appropriate validation on each field in schema
 - Add timestamps to the user Schema
+- Add API level validation on patch request and signup post api.
+- Add API level validation for each field.
