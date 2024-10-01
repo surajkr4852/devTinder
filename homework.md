@@ -74,3 +74,11 @@
 - Install validator library
 - Explore validator library functions and use validator func for password, email,photoUrl.
 - Never Blindly trust res.body;
+
+
+
+- EP 9
+- Validate data in SignUp API-> Create helper function
+- Install bcrypt package
+- Create a password Hash using bcrypt.hash() and save the user with encrypted password.
+- 

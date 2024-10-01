@@ -73,4 +73,3 @@ const userSchema= mongoose.Schema({
 // To use our schema definition, we need to convert our schema into a Model we can work with. 
 
 module.exports=mongoose.model("User",userSchema);
-;

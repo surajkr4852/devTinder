@@ -2,18 +2,35 @@ const express=require("express");
 const connectDB=require("./config/database");
 const app=express();
 const User=require("./models/user");
+const validateSignUpData=require("./utils/validation");
+const bcrypt=require("bcrypt");
 
 app.use(express.json());// Built-in middleware to convert JSON into JavaScript object
 
 // Saving data into database.
 app.post("/signup",async (req,res)=>{ 
-    // Creating a new instance of the User Model
-    const user=new User(req.body);
+    
     try{
+        //Validation of data.
+        validateSignUpData(req);
+
+        //Encrypt the password and then store
+        const {password,firstName,lastName,emailId}=req.body;
+        const passwordHash=await bcrypt.hash(password,10);// Encrypting password.
+
+        // Creating a new instance of the User Model
+        const user=new User({
+            firstName,
+            lastName,
+            emailId,
+            password:passwordHash,
+        });
+    
+        //Saving the user
         await user.save()
-        res.send("User data is saved successfully");
+        res.send("User Added successfully");
     }catch(err){
-        res.status(400).send("Error saving the User...!"+ err.message);
+        res.status(400).send("ERROR : "+ err.message);
     }
 })
 
