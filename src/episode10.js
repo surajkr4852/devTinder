@@ -5,12 +5,14 @@ const User=require("./models/user");
 const validateSignUpData=require("./utils/validation");
 const bcrypt=require("bcrypt");
 const validator=require("validator");
+const cookieParser = require("cookie-parser");
+const jwt=require("jsonwebtoken");
 
 app.use(express.json());// Built-in middleware to convert JSON into JavaScript object
+app.use(cookieParser());
 
 // Saving data into database.
 app.post("/signup",async (req,res)=>{ 
-    
     try{
         //Validation of data.
         validateSignUpData(req);
@@ -54,6 +56,12 @@ app.post("/login",async (req,res)=>{
         const isPasswordValid=await bcrypt.compare(password,user.password);
         console.log(isPasswordValid);
         if(isPasswordValid){
+            //Create a JWT Token here, as email and password is validated.
+            const token=await jwt.sign({_id:user._id},"Dev@$123");
+
+            //Add the token to cookie and send the response to the user.
+            res.cookie("token",token);
+
             res.send("Login Successful!!!");
         }else{
             throw new Error("Invalid Credentials");
@@ -64,7 +72,31 @@ app.post("/login",async (req,res)=>{
     }
 })
 
-//Get user by email
+//Get profile of loggedin User
+app.get("/profile",async(req,res)=>{
+    try{
+        const cookies=req.cookies;
+        console.log(cookies);
+        const {token} =cookies;
+        if(!token){
+            throw new Error("Invalid Token");
+        }
+        //Validate my token
+        const decodedMessage=await jwt.verify(token,"Dev@$123");
+        const{_id}=decodedMessage;
+        const user=await User.findById(_id);
+        if(!user){
+            throw new Error("User does not Exist");
+        }else{
+            res.send(user);
+        }
+    }
+    catch(err){
+        res.status(400).send("ERROR : "+err.message);
+    }
+})
+
+// Search/get user by email
 app.get("/user",async (req,res)=>{
     const userEmail=req.body.emailId;
     try{
