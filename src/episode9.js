@@ -4,6 +4,7 @@ const app=express();
 const User=require("./models/user");
 const validateSignUpData=require("./utils/validation");
 const bcrypt=require("bcrypt");
+const validator=require("validator");
 
 app.use(express.json());// Built-in middleware to convert JSON into JavaScript object
 
@@ -31,6 +32,35 @@ app.post("/signup",async (req,res)=>{
         res.send("User Added successfully");
     }catch(err){
         res.status(400).send("ERROR : "+ err.message);
+    }
+})
+
+// Login API
+app.post("/login",async (req,res)=>{
+    try{
+        const {emailId,password}=req.body;
+        // Check if email syntax is valid
+        if(!validator.isEmail(emailId)){
+            throw new Error("Invalif Credentials");
+        }
+
+        // First check if any user is present with that email.
+        const user=await User.findOne({emailId:emailId});
+        if(!user){
+            throw new Error("Invalid Credentials");
+        }
+
+        // Check if password matches in DB
+        const isPasswordValid=await bcrypt.compare(password,user.password);
+        console.log(isPasswordValid);
+        if(isPasswordValid){
+            res.send("Login Successful!!!");
+        }else{
+            throw new Error("Invalid Credentials");
+        }
+    }
+    catch(err){
+        res.status(400).send("ERROR : "+err.message);
     }
 })
 
