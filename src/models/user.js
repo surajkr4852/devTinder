@@ -2,8 +2,11 @@
 
 const mongoose=require("mongoose");
 const validator = require('validator');
+const bcrypt=require("bcrypt");
+const jwt=require("jsonwebtoken");
 
-const userSchema= mongoose.Schema({
+const userSchema= mongoose.Schema(
+    {
     // pass all the the parameters that define a user
     firstName:{
         type:String,
@@ -64,12 +67,28 @@ const userSchema= mongoose.Schema({
     skills:{
         type:[String]
     }
-},
-{
-    timestamps: true
-}
+    },
+    {
+        timestamps: true
+    }
 );
 
+//Every user will have their own JWT token.
+userSchema.methods.getJWT=async function (){// this function will not work with arrow function
+    const user=this;// "this " is referencing to the current instance
+
+    const token=await jwt.sign({_id:user._id},"Dev@$123",{
+        expiresIn:"7d",
+    });
+    return token;
+}
+
+userSchema.methods.validatePassword= async function(passwordInputByUser){
+    const user=this;
+    const passwordHash=this.password;
+    const isPasswordValid=await bcrypt.compare(passwordInputByUser,passwordHash);
+    return isPasswordValid;
+}
 // To use our schema definition, we need to convert our schema into a Model we can work with. 
 
 module.exports=mongoose.model("User",userSchema);
