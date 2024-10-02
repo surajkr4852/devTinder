@@ -1,10 +1,9 @@
 const express=require("express");
 const authRouter=express.Router();
-const validateSignUpData=require("../utils/validation");
+const {validateSignUpData}=require("../utils/validation");
 const User=require("../models/user");
 const bcrypt=require("bcrypt");
 const validator=require("validator");
-
 
 // Saving data into database.
 authRouter.post("/signup",async (req,res)=>{ 
@@ -54,7 +53,9 @@ authRouter.post("/login",async (req,res)=>{
             const token=await user.getJWT();// same=>    jwt.sign({_id:user._id},"Dev@$123",{expiresIn:"7d",});
 
             //Add the token to cookie and send the response to the user.
-            res.cookie("token",token);
+            res.cookie("token",token,{
+                expires:new Date(Date.now()+ 8*3600000)
+            });
 
             res.send("Login Successful!!!");
         }else{
@@ -65,5 +66,12 @@ authRouter.post("/login",async (req,res)=>{
         res.status(400).send("ERROR : "+err.message);
     }
 });
+
+// Logout API
+authRouter.post("/logout",async(req,res)=>{ // No need of authentication
+    res.cookie("token",null,{   // set the cookie token to null
+        expires:new Date(Date.now()),  // Expire the cookie right there(now).
+    }).send("Logout Successful!");
+})
 
 module.exports=authRouter;

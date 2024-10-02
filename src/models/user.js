@@ -78,7 +78,7 @@ userSchema.methods.getJWT=async function (){// this function will not work with 
     const user=this;// "this " is referencing to the current instance
 
     const token=await jwt.sign({_id:user._id},"Dev@$123",{
-        expiresIn:"7d",
+        expiresIn:"1d",
     });
     return token;
 }
