@@ -1,16 +1,84 @@
 const express=require("express");
 const {userAuth}=require("../middlewares/auth");
+const ConnectionRequest = require("../models/connectionRequest");
+const User=require("../models/user");
 
 const requestRouter=express.Router();
 
-// Send connection request 
-requestRouter.post("/sendConnectionRequest",userAuth,async (req,res)=>{
-    const user=req.user;
+// Send connection request to any user
+// requestRouter.post("/request/send/:status/:toUserId",       // Intern Level Send connection code
+//     userAuth,// this gives the logged in user details in the req.user
+//     async (req,res)=>{
+//     try{
+//         const fromUserId=req.user._id;
+//         const toUserId=req.params.toUserId;
+//         const status=req.params.status;
 
-    //Sending connection request
-    console.log("User is Sending connection request...");
+//         const connectionRequest=new ConnectionRequest({
+//             fromUserId,
+//             toUserId,
+//             status
+//         });
+//         const data=await connectionRequest.save();
+//         res.json({
+//             message:"Connection Request Sent Successfully !",
+//             data,
+//         })
+//     }catch(err){
+//         res.status(400).send("ERROR :"+err.message);
+//     }
+// });
 
-    res.send(user.firstName+" Sent the connection Request!");
+// Expert level code for Send connection request to any user
+
+requestRouter.post("/request/send/:status/:toUserId",
+    userAuth,// this gives the logged in user details in the req.user
+    async (req,res)=>{
+    try{
+        const fromUserId=req.user._id;
+        const toUserId=req.params.toUserId;
+        const status=req.params.status;
+
+        //if User tries to send request to himself
+        if(fromUserId===toUserId);
+
+        // Status validation , can only be interested or ignored
+        const allowedStatus=["interested","ignored"];
+        if(!allowedStatus.includes(status)){
+            return res.status(400).json({message:"Invalid Status type !" + status})
+        }
+        // Check if toUserId user is present or not  in the Database.
+        const toUser=await User.findById(toUserId);
+        if(!toUser){
+            res.status(400).json({message:"User not found"});
+        }
+ 
+
+        // Check if there is existing connection request (connection req is pending from A to B or , From B to A)
+        // if this is the case then sender should not be allowed to send request once again.
+        const existingConnectionRequest=await ConnectionRequest.findOne({
+            $or:[   // This is how to write OR condition on mongoose
+                {fromUserId,toUserId},// First condition
+                {fromUserId:toUserId,toUserId:fromUserId} // Second condition
+            ]
+        });
+        if(existingConnectionRequest){
+            res.status(400).json({message:"Connection Request Already Exist"});
+        }
+
+        const connectionRequest=new ConnectionRequest({
+            fromUserId,
+            toUserId,
+            status
+        });
+        const data=await connectionRequest.save();
+        res.json({
+            message:req.user.firstName+" is "+status+" in "+toUser.firstName,
+            data,
+        })
+    }catch(err){
+        res.status(400).send("ERROR :"+err.message);
+    }
 });
 
 module.exports=requestRouter;

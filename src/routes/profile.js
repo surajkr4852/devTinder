@@ -33,11 +33,15 @@ profileRouter.patch("/profile/edit",userAuth,async (req,res)=>{
             message:`${loggedInUser.firstName} your profile updated successfully`,
             data:loggedInUser
         });
-
     }catch(err){
         res.status(400).send("ERROR : "+err.message);
     }
+});
+
+// Change password
+profileRouter.patch("/profile/password",async(req,res)=>{
     
 })
+
 
 module.exports=profileRouter;

@@ -106,3 +106,12 @@
 - create authRouter,profileRouter,requestRouter
 - Import these router in app.js
 - use the routers.(import these router in app.js)
+
+
+- Create ConnectionRequest Schema
+- API => send connection request.
+- proper validation of data
+- think about corner cases and handle them
+- Locical Query in mongoDB $or, $and
+- schema.pre() function
+- Read about compound index, indexing
