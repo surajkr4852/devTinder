@@ -10,13 +10,14 @@ app.use(cookieParser());
 const authRouter=require("./routes/auth");// express.Router();
 const profileRouter=require("./routes/profile");
 const requestRouter=require("./routes/request");
+const userRouter=require("./routes/user");
 
 app.use("/",authRouter)// Whenever a request is coming at "/" , go to authRouter and check all the 
             // router inside it,if there is any route which is matching, the expressRouter acts as middleware here.
 
 app.use("/",profileRouter);
 app.use("/",requestRouter);
-
+app.use("/",userRouter);
 connectDB()
     .then(()=>{
         console.log("Database Connected successfully");

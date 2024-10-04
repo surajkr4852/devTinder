@@ -81,7 +81,7 @@ requestRouter.post("/request/send/:status/:toUserId",
     }
 });
 
-
+// review connection request => accept or reject
 requestRouter.post("/request/review/:status/:requestId",
     userAuth,
     async(req,res)=>{
@@ -114,6 +114,6 @@ requestRouter.post("/request/review/:status/:requestId",
         catch(err){
             res.status(400).send("ERROR : "+err.message);
         }
-    });
+});
 
 module.exports=requestRouter;

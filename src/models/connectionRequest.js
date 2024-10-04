@@ -2,10 +2,15 @@ const mongoose=require("mongoose");
 const connectionRequestSchema=new mongoose.Schema({
     fromUserId:{
         type:mongoose.Schema.Types.ObjectId,
+
+        ref:"User", // reference to the User collection
+                    //you say that  fromUserId is a reference to the user collection,
+                    // This says that this fromUserId is the id of from the user collection
         required:true,
     },
     toUserId:{
         type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
         required:true,
     },
     status:{

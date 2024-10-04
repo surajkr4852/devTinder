@@ -118,3 +118,20 @@
 
 
 - Write code with proper for POST /request/review/:status/:requestId
+- read about ref and populate,,replacement for joins
+- https://mongoosejs.com/docs/populate.html       
+- create GET /request/requests/recieved      with all checks
+- create GET /user/connections 
+
+- logic for GET/feed  API
+- explore the $and , $nin ,$ne   => logical and comparison query operators from mongodb docs.
+
+
+/feed?page=1&limit=10 => 01-10      .skip(0) & .limit(10)
+
+/feed?page=2&limit=10 => 11-20      .skip(10) & .limit(10)
+
+/feed?page=3&limit=10 => 21-30      .skip(20) & .limit(10)
+
+.skip() => how many documents you skip from starting 
+.limit() => how many documents you want
