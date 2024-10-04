@@ -11,11 +11,8 @@
 - PATCH /profile/password   => take it as HOMEWORK
 
 ## connectionRequestRouter
-- POST /request/send/interested/:userId
-- POST /request/send/Ignore/:userId
-
-- POST /request/review/accepted/:requestId
-- POST /request/review/rejected/:requestId
+ -POST /request/send/:status/:userId  <!-- status => interested, ignored -->
+- POST /request/review/:status/:requestId   <!-- status=> accepted, rejected -->
 
 ## userRouter
 - GET /user/connections

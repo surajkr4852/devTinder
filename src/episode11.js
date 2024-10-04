@@ -19,7 +19,7 @@ app.use("/",requestRouter);
 
 connectDB()
     .then(()=>{
-        console.log("DB connection successfully");
+        console.log("Database Connected successfully");
         app.listen(7777,()=>{
             console.log("Server is listening at port number 7777...!");
         })
